@@ -11,9 +11,9 @@
 # TODO : change the file name/path to access the files
 # NOTE : Before you submit the code, make sure these two fields are "input.txt" and "output.txt"
 	file_in:
-		.asciiz	"input.txt"
+		.asciiz	"/Users/wchiang/Documents/school/106-1/CA/ca2017_hw3/input.txt"
 	file_out:
-		.asciiz	"output.txt"
+		.asciiz	"/Users/wchiang/Documents/school/106-1/CA/ca2017_hw3/output.txt"
 		
 # the following data is only for sample demonstration		
 	output_ascii:	
@@ -71,11 +71,38 @@
 	move	$s2, $v0	# $s2 <= atoi(input2)
 
 	lw	$s3, operater	# $s3 <= operater
-
+    
+    move $a0, $s1
+    jal irec
+    move $s4, $v0
+    j result
 # Inputs are ($s1: input1, $s2: input2, $s3: operator's ASCII)
 # Output is $s4 (in integer)
 
-	
+irec:
+    bgt $a0, 1, recursion
+    move $v0, $s2
+    jr $ra
+
+recursion:
+    sub $sp, $sp, 8
+    sw $ra, 0($sp)
+    sw $a0, 4($sp)
+    addi $t2, $zero, 2
+    div $a0, $t2
+    mflo $a0
+    jal irec
+    mult $t2, $v0
+    mflo $t4
+    lw $t5, 4($sp)
+    mult $t5, $s2
+    mflo $t3
+    add $v0, $t4, $t3
+    lw $ra, 0($sp)
+    addi $sp, $sp, 8
+    jr $ra
+
+    	
 #STEP5: turn the integer into pritable char
     # transferred ASCII should be put into "output_ascii"(see definition in the beginning of the file)
 result:
