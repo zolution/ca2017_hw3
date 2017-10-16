@@ -75,38 +75,6 @@
 # Inputs are ($s1: input1, $s2: input2, $s3: operator's ASCII)
 # Output is $s4 (in integer)
 
-
-#STEP4 integer operations
-	# TODO: operation selector
-    # hint: you could write multiple "if (operator==??)then(...)" structures below
-    beq $s3, 43, addition
-	beq $s3, 45, substraction
-	beq $s3, 42, multiplication
-	beq $s3, 47, division
-	j nothing
-
-addition:
-	add	$s4, $s1, $s2	# $s4 <= $s1 + $s2
-	j result
-
-substraction:
-	sub $s4, $s1, $s2
-	j result
-
-multiplication:
-	mult $s1, $s2
-	mflo $s4
-	j result
-
-division:
-	beq $s2, 0, ret
-	div $s1, $s2
-	mflo $s4
-	j result
-
-nothing:
-	j ret
-
 	
 #STEP5: turn the integer into pritable char
     # transferred ASCII should be put into "output_ascii"(see definition in the beginning of the file)
